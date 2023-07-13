@@ -29,6 +29,7 @@
 #include "config.h"
 #include "shmem_env.h"
 #include "shmem_decl.h"
+#include "shmem_tools.h"
 
 extern int shmem_internal_my_pe;
 extern int shmem_internal_num_pes;

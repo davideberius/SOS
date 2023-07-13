@@ -77,6 +77,45 @@ extern "C" {
 /* MAX_HINTS value includes the SHMEMX constant(s) in shmemx.h4 */
 #define SHMEM_MALLOC_MAX_HINTS        ((1l<<3) - 1)
 
+
+/* Tools */
+typedef enum SHMEM_TOOLS_PVARS
+{
+    SHMEM_T_VAR_PUT,
+    SHMEM_T_VAR_GET,
+    SHMEM_TOOLS_NUM_PVARS
+} SHMEM_TOOLS_PVARS;
+
+typedef enum SHMEM_TOOLS_CVARS
+{
+    SHMEM_T_VAR_BOUNCE_BUFFER_SIZE,
+    SHMEM_TOOLS_NUM_CVARS
+} SHMEM_TOOLS_CVARS;
+
+#define SHMEM_TOOLS_PVAR_TYPE 0
+#define SHMEM_TOOLS_CVAR_TYPE 1
+
+typedef struct {
+    uint64_t var;
+    void *shmem_obj_handle;
+} shmem_t_handle_config;
+
+typedef struct {
+    short type;
+    uint64_t offset;
+    uint64_t var;
+    void *shmem_obj_handle;
+} shmem_t_var_handle;
+
+typedef struct {
+    uint32_t id;
+    uint64_t var;
+    uint32_t class;
+    uint32_t binding;
+    uint32_t operation;
+    uint32_t scope;
+} shmem_t_var;
+
 /* Contexts */
 typedef struct shmem_impl_ctx_t { int dummy; } * shmem_ctx_t;
 

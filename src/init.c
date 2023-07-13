@@ -174,7 +174,6 @@ shmem_internal_start_pes(int npes)
     if (ret) abort();
 }
 
-
 int
 shmem_internal_init(int tl_requested, int *tl_provided)
 {

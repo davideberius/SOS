@@ -49,6 +49,19 @@ SHMEM_FUNCTION_ATTRIBUTES void *SHPRE()shmem_team_ptr(shmem_team_t team, const v
 SHMEM_FUNCTION_ATTRIBUTES void SHPRE()shmem_info_get_version(int *major, int *minor);
 SHMEM_FUNCTION_ATTRIBUTES void SHPRE()shmem_info_get_name(char *name);
 
+/* SHMEM Tools Routines */
+SHMEM_FUNCTION_ATTRIBUTES void SHPRE()shmem_t_init(void);
+SHMEM_FUNCTION_ATTRIBUTES void SHPRE()shmem_t_finalize(void);
+SHMEM_FUNCTION_ATTRIBUTES void SHPRE()shmem_t_var_get_num(int type, int *num);
+SHMEM_FUNCTION_ATTRIBUTES void SHPRE()shmem_t_var_avail(int type, shmem_t_var **list_vars);
+SHMEM_FUNCTION_ATTRIBUTES void SHPRE()shmem_t_var_handle_alloc(shmem_t_handle_config handle_config, shmem_t_var_handle *handle);
+SHMEM_FUNCTION_ATTRIBUTES void SHPRE()shmem_t_var_handle_free(shmem_t_var_handle *handle);
+SHMEM_FUNCTION_ATTRIBUTES int  SHPRE()shmem_t_var_reset(shmem_t_var_handle handle);
+SHMEM_FUNCTION_ATTRIBUTES int  SHPRE()shmem_t_var_read(shmem_t_var_handle handle, void *buf);
+SHMEM_FUNCTION_ATTRIBUTES int  SHPRE()shmem_t_var_write(shmem_t_var_handle handle, const void *buf);
+SHMEM_FUNCTION_ATTRIBUTES int  SHPRE()shmem_t_var_list_read(shmem_t_var_handle *handles, void **buf, int count);
+SHMEM_FUNCTION_ATTRIBUTES int  SHPRE()shmem_t_get_var(int var_type, int operation, int bind, int var_scope, int var_class, int var_offset, uint64_t *var);
+
 /* Memory Management Routines */
 SHMEM_FUNCTION_ATTRIBUTES void *SHPRE()shmem_malloc(size_t size);
 SHMEM_FUNCTION_ATTRIBUTES void *SHPRE()shmem_calloc(size_t count, size_t size);

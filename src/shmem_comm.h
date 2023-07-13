@@ -36,6 +36,9 @@ shmem_internal_put_scalar(shmem_ctx_t ctx, void *target, const void *source, siz
 {
     shmem_internal_assert(len > 0);
 
+    //shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_PUT, 1);
+    shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_BYTES_WRITTEN, len);
+
     if (shmem_shr_transport_use_write(ctx, target, source, len, pe)) {
         shmem_shr_transport_put_scalar(ctx, target, source, len, pe);
     } else {
@@ -52,6 +55,9 @@ shmem_internal_put_nb(shmem_ctx_t ctx, void *target, const void *source, size_t 
     if (len == 0)
         return;
 
+    //shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_PUT, 1);
+    shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_BYTES_WRITTEN, len);
+
     if (shmem_shr_transport_use_write(ctx, target, source, len, pe)) {
         shmem_shr_transport_put(ctx, target, source, len, pe);
     } else {
@@ -64,6 +70,9 @@ void
 shmem_internal_put_signal_nbi(shmem_ctx_t ctx, void *target, const void *source, size_t len,
                               uint64_t *sig_addr, uint64_t signal, int sig_op, int pe)
 {
+    //shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_PUT, 1);
+    shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_BYTES_WRITTEN, len);
+
     if (len == 0) {
         if (sig_op == SHMEM_SIGNAL_ADD)
             shmem_transport_atomic((shmem_transport_ctx_t *) ctx, sig_addr, &signal, sizeof(uint64_t),
@@ -87,6 +96,9 @@ shmem_internal_put_nbi(shmem_ctx_t ctx, void *target, const void *source, size_t
 {
     if (len == 0) return;
 
+    //shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_PUT, 1);
+    shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_BYTES_WRITTEN, len);
+
     if (shmem_shr_transport_use_write(ctx, target, source, len, pe)) {
         shmem_shr_transport_put(ctx, target, source, len, pe);
     } else {
@@ -100,6 +112,9 @@ void
 shmem_internal_put_ct_nb(shmemx_ct_t ct, void *target, const void *source, size_t len, int pe,
                       long *completion)
 {
+    //shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_PUT, 1);
+    shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_BYTES_WRITTEN, len);
+
     /* TODO: add shortcut for on-node-comms */
     shmem_transport_put_ct_nb((shmem_transport_ct_t *)
                               ct, target, source, len, pe, completion);
@@ -121,6 +136,9 @@ shmem_internal_get(shmem_ctx_t ctx, void *target, const void *source, size_t len
 {
     if (len == 0) return;
 
+    //shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_GET, 1);
+    shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_BYTES_READ, len);
+
     if (shmem_shr_transport_use_read(ctx, target, source, len, pe)) {
         shmem_shr_transport_get(ctx, target, source, len, pe);
     } else {
@@ -133,6 +151,8 @@ static inline
 void
 shmem_internal_get_ct(shmemx_ct_t ct, void *target, const void *source, size_t len, int pe)
 {
+    //shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_GET, 1);
+    shmem_internal_tools_counter_update(SHMEM_INTERNAL_TOOLS_BYTES_READ, len);
     /* TODO: add shortcut for on-node-comms */
     shmem_transport_get_ct((shmem_transport_ct_t *) ct,
                            target, source, len, pe);
